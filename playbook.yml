@@ -1,0 +1,24 @@
+---
+- hosts: all
+  user: vagrant
+
+  tasks:
+    - name: ensure packages installed
+      apt:
+        pkg: "{{ item }}"
+        state: latest
+        install_recommends: no
+      with_items:
+        - curl
+        - wget
+        - htop
+        - tmux
+        - docker.io
+        - git-core
+        - openjdk-7-jre-headless
+
+    - name: leiningen
+      get_url:
+        url: https://raw.github.com/technomancy/leiningen/stable/bin/lein
+        dest: /usr/local/bin/lein
+        mode: 0755
